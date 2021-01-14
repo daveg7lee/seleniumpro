@@ -2,6 +2,7 @@
 
 Using Selenium and Python we will build:
 
-- [ ] Google Scraper and Screenshooter
-- [ ] Automatic Responsive Design Tester
-- [ ] Instagram Hashtag Mining Tool
+- [x] Google Scraper and Screenshooter
+- [x] Automatic Responsive Design Tester
+- [ ] Instagram Hashtag Mining Tool (failed)
+- [x] Google Image Scraper
