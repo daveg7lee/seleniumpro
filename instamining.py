@@ -16,10 +16,18 @@ header = WebDriverWait(browser, 10).until(
     EC.presence_of_element_located((By.TAG_NAME, "header"))
 )
 
-hashtags = header.find_elements_by_class_name("AC7dP")
+input = browser.find_element_by_class_name("XTCLo")
+
+input.send_keys(f"#{main_hashtag}")
+
+hashtags = WebDriverWait(browser, 10).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME, "yCE8d")))
 
 for hashtag in hashtags:
-    hashtag.click()
+    name = hashtag.find_element_by_class_name("Ap253").text
+    browser.execute_script(
+        f"window.open('https://www.instagram.com/explore/tags/{name[1:]}')")
+    time.sleep(1)
 
 
 time.sleep(3)
