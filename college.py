@@ -7,39 +7,29 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class GetUniversityInfo:
-    def __init__(self, url):
-        self.browser = webdriver.Chrome(ChromeDriverManager().install())
-        self.url = url
-        self.university_list = []
+browser = webdriver.Chrome(ChromeDriverManager().install())
 
-    def start(self):
-        self.browser.get(self.url)
-        universities = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "search-result__title")))
+browser.get("https://www.niche.com/colleges/search/best-colleges-for-computer-science/?goodFor=internationalStudents&netPrice=0,12000&type=private&type=public")
 
-        for university in universities:
-            self.university_list.append(university.text)
+universities = WebDriverWait(browser, 10).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME, "search-result__title")))
 
-        self.browser.quit()
+university_list = []
 
-        self.search()
+for university in universities:
+    university_list.append(university.text)
 
-    def search(self):
-        browser = webdriver.Chrome(ChromeDriverManager().install())
-        browser.get("https://google.com")
-        for index, university_text in enumerate(self.university_list):
-            if index != 0:
-                browser.execute_script(
-                    "window.open('https://google.com')")
-            tabs = browser.window_handles
-            browser.switch_to_window(tabs[index])
-            input = browser.find_element_by_class_name("gLFyf")
-            input.send_keys(university_text)
-            input.send_keys(Keys.ENTER)
+browser.quit()
 
+browser = webdriver.Chrome(ChromeDriverManager().install())
 
-tester = GetUniversityInfo(
-    "https://www.niche.com/colleges/search/best-colleges-for-computer-science/?goodFor=internationalStudents&netPrice=0,12000&type=private&type=public")
+browser.get("https://google.com")
 
-tester.start()
+for index, university_text in enumerate(university_list):
+    if(index != 0):
+        browser.execute_script(
+            "window.open('https://google.com')")
+    browser.switch_to.window(browser.window_handles[-1])
+    input = browser.find_element_by_class_name("gLFyf")
+    input.send_keys(university_text)
+    input.send_keys(Keys.ENTER)
